@@ -1,0 +1,11 @@
+<h1> Welcome, </h1>
+
+<% @projects.each do |p|%>
+  <%= p.name %>
+<%end%>
+
+<a href="/logout">Log Out</a>
+<ul>
+  <li><a href="/users/index">Your Profile</a></li>
+  <li><a href="/logout">Log Out</a></li>
+</ul>
