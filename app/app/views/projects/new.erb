@@ -1,5 +1,7 @@
 <form action="/projects" method="POST">
-  Name Of Project: <input type="text" name="name" id="name"><br>
-  Description: <input type="text" name="description" id="description"><br>
+  Name:<input type="text" name="project_name" id="project_name"><br>
+  Description:<input type="text" name="description" id="description"><br>
+  Content: <input type="text" name="content" id="content"><br>
+  <%user_id = session[:id]%>
   <input type="submit" name="submit" id="submit">
 </form>

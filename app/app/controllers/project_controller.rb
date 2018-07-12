@@ -11,10 +11,24 @@ class ProjectController < ApplicationController
     end
   end
 
+  get 'projects/projects' do
+    if Helpers.is_logged_in?(session)
+      erb :'projects/projects'
+    else
+      redirect '/login'
+    end
+  end
+
   post '/projects' do
     @user = Helpers.current_user(session)
-    if !params[:name].empty?
-      @Project = @user.projects.create(content: params[:content])
+    if !params[:project_name].empty?
+      if !@user.projects.include?(params[:project_name])
+        puts""
+        puts @user.projects
+        puts""
+        @Project = @user.projects.create(project_name: params[:project_name])
+        erb :'projects/projects'
+      end
     else
       redirect '/projects/new'
     end
