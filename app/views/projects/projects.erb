@@ -1,10 +1,11 @@
-<h1> Welcome, </h1>
-
-<% @projects.each do |p|%>
-  <%= p.name %>
+<%if Helpers.is_logged_in?(session)%>
+  <h2>These are your projects, <%= session[:username]%></h2>
 <%end%>
 
-<a href="/logout">Log Out</a>
+<% @user.projects.each do |p|%>
+  <a href="/projects/:id/edit"> <%= p.project_name %><br> </a>
+<%end%>
+
 <ul>
   <li><a href="/users/index">Your Profile</a></li>
   <li><a href="/logout">Log Out</a></li>
