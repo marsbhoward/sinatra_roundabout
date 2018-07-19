@@ -22,13 +22,11 @@ class ProjectController < ApplicationController
   post '/projects' do
     @user = Helpers.current_user(session)
     if !params[:project_name].empty?
-      if !@user.projects.include?(params[:project_name])
-        puts""
-        puts @user.projects
-        puts""
+
+    #  if Project.exists?(project_name: (params[:project_name]))
         @Project = @user.projects.create(project_name: params[:project_name])
         erb :'projects/projects'
-      end
+    #  end
     else
       redirect '/projects/new'
     end
@@ -45,7 +43,7 @@ class ProjectController < ApplicationController
   get '/projects/:id' do
     if Helpers.is_logged_in?(session)
       @project = Project.find_by(id: params[:id])
-      erb :'projects/show_project'
+      erb :'projects/show'
     else
       redirect '/login'
     end
@@ -60,7 +58,7 @@ class ProjectController < ApplicationController
   get '/projects/:id/edit' do
     if Helpers.is_logged_in?(session)
       @project = Project.find_by(id: params[:id])
-      erb :'projects/edit_project'
+      erb :'projects/edit_projects'
     else
       redirect '/login'
     end

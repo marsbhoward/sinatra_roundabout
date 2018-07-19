@@ -11,6 +11,9 @@ class UserController < ApplicationController
   post '/signup' do
     if params['username'].empty? || params['password'].empty? || params['email'].empty?
       redirect '/signup'
+    #elsif
+      #self.list.include? (params['username'])
+      #redirect '/signup'
     else
       @user = User.new(username: params['username'], email: params['email'], password: params['password'])
       @user.save
@@ -42,14 +45,19 @@ class UserController < ApplicationController
   get '/logout' do
     if Helpers.is_logged_in?(session)
       session.clear
-      redirect '/login'
-    else
       redirect '/'
+    else
+      redirect '/login'
     end
   end
 
   get '/users/index' do
     erb :'users/index'
+  end
+
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'users/show'
   end
 
   post '/index/users' do

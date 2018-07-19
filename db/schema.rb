@@ -12,18 +12,20 @@
 
 ActiveRecord::Schema.define(version: 2018_07_10_232135) do
 
-  create_table "tweets", force: :cascade do |t|
+  create_table "projects", force: :cascade do |t|
     t.integer "project_id"
-    t.integer "creator_id"
+    t.integer "user_id"
     t.string "project_name"
     t.string "description"
     t.string "contributors"
+    t.string "content"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.integer "user_id"
   end
 
 end
