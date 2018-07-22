@@ -11,9 +11,11 @@ class UserController < ApplicationController
   post '/signup' do
     if params['username'].empty? || params['password'].empty? || params['email'].empty?
       redirect '/signup'
-    #elsif
-      #self.list.include? (params['username'])
-      #redirect '/signup'
+
+    elsif User.where(username: params['username']).exists?
+
+      #:database.execute(SELECT COUNT (usersname) FROM users WHERE usersname = params ['usersname']) == 1
+      redirect '/signup'
     else
       @user = User.new(username: params['username'], email: params['email'], password: params['password'])
       @user.save
@@ -47,17 +49,12 @@ class UserController < ApplicationController
       session.clear
       redirect '/'
     else
-      redirect '/login'
+      redirect '/signup'
     end
   end
 
   get '/users/index' do
     erb :'users/index'
-  end
-
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    erb :'users/show'
   end
 
   post '/index/users' do
