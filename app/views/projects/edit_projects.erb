@@ -1,5 +1,9 @@
-<form action="/projects/<%=@project.project_id%>/edit" method="POST">
-  <h2> @projects.project_name </h2>
-  Content: <input type="text" name="content" id="content" value="<%=@project.content%>"><br>
-  <input type="submit" name="submit" id="submit" value="Edit Tweet">
+<form action="/projects" method="POST">
+  Project name: <%= session[:project_name] %><br>
+  project_id: <%= session[:project_id] %><br>
+
+  Description:<input type="text" name="description" id="description"><br>
+  Content: <input type="text" name="content" id="content"><br>
+  <%user_id = session[:id]%>
+  <input type="submit" name="submit" id="submit">
 </form>

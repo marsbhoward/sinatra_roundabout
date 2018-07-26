@@ -3,7 +3,10 @@
 <%end%>
 
 <% @user.projects.each do |p|%>
-  <a href="/projects/:id/edit"> <%= p.project_name %><br> </a>
+  <a href="/projects/:project_id/edit"> <%= p.project_name %>
+  <% session[:project_name] = p.project_name %>
+  <% session[:project_id] = p.project_id %> <br> </a>
+  <% #session %>c
 <%end%>
 
 <ul>
