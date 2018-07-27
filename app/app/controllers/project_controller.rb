@@ -12,23 +12,18 @@ class ProjectController < ApplicationController
   end
 
   get 'projects/projects' do
-    if Helpers.is_logged_in?(session)
-      erb :'projects/projects'
-    else
-      redirect '/login'
-    end
-  end
+   if Helpers.is_logged_in?(session)
+     erb :'projects/projects'
+   else
+     redirect '/login'
+   end
+ end
 
   post '/projects' do
     @user = Helpers.current_user(session)
-    if !params[:project_name].empty?
-      if !@user.projects.include?(params[:project_name])
-        puts""
-        puts @user.projects
-        puts""
-        @Project = @user.projects.create(project_name: params[:project_name])
-        erb :'projects/projects'
-      end
+    if !params[:project_name].empty? && Project.where(project_name: params['project_name']).exists? == false
+        @Project = @user.projects.create(project_name: params[:project_name],description: params[:description],content: params[:content],contributors: session[:username])
+        erb :'/projects/projects'
     else
       redirect '/projects/new'
     end
@@ -42,33 +37,49 @@ class ProjectController < ApplicationController
     end
   end
 
-  get '/projects/:id' do
+  get '/projects/:project_id' do
     if Helpers.is_logged_in?(session)
-      @project = Project.find_by(id: params[:id])
-      erb :'projects/show_project'
+      @user = Helpers.current_user(session)
+      @project = Helpers.current_project(session)
+      erb :'projects/projects'
     else
       redirect '/login'
     end
   end
 
-  post '/projects/:id/delete' do
-    @project = Project.find_by(id: params[:id])
-    @project.delete if @project.user == Helpers.current_user(session)
-    redirect '/projects'
-  end
-
-  get '/projects/:id/edit' do
+  get '/projects/:project_id/show' do
     if Helpers.is_logged_in?(session)
-      @project = Project.find_by(id: params[:id])
-      erb :'projects/edit_project'
+      @user = Helpers.current_user(session)
+      @project = Helpers.current_project(session)
+      erb :'/projects/show'
     else
       redirect '/login'
     end
   end
 
-  post '/projects/:id/edit' do
-    @project = Project.find_by(id: params[:id])
-    @project.update(content: params[:content])
+  post '/projects/:project_id/delete' do
+    if Helpers.is_logged_in?(session)
+      @project = Project.find_by(project_id: params[:project_id])
+      @project.destroy
+    else
+      redirect '/login'
+    end
+  end
+
+  get '/projects/:project_id/edit' do
+    if Helpers.is_logged_in?(session)
+      @project = Helpers.current_project(session)
+      #@project = Project.find_by(project_id: params[:project_id])
+      erb :'projects/edit_projects'
+    else
+      redirect '/login'
+    end
+  end
+
+  post '/projects/:project_id/edit' do
+    @project = Project.find_by(project_name: session[:project_name])
+    @project.update(description: params[:description] ,content: params[:content])
     @project.save
+    erb :'/users/index'
   end
 end

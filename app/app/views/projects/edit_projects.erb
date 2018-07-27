@@ -1,0 +1,9 @@
+<form action="/projects/:project_id/edit" method="POST">
+  Project name: <%= session[:project_name] %><br>
+  <%user_id = session[:id]%>
+
+  Description:<input type="text" name="description" id="description"><br>
+  Content: <input type="text" name="content" id="content"><br>
+  <input type="submit" name="edit" id="edit" value="edit project"><br>
+  <input type="submit" name="delete" id="delete" value="delete project">
+</form>

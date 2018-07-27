@@ -1,7 +1,16 @@
-<%if Helpers.is_logged_in?(session)%>
+<%if @user.projects.size == 0 %>
+  <h2>You dont currently have any projects :(</h2><br>
+  <a href="/projects/new"> Start a new project here
+<%else%>
   <h2>These are your projects, <%= session[:username]%></h2>
+  <% @user.projects.each do |p|%>
+    <a href="/projects/:project_id/show"> <%= p.project_name %><br>
+    <% session[:project_name] = p.project_name %>
+    <% session[:project_id] = p.project_id %> <br> </a>
+  <%end%>
 <%end%>
 
-<% @user.projects.each do |p|%>
-  <%= p.project_name %><br>
-<%end%>
+<ul>
+  <li><a href="/users/index">Your Profile</a></li>
+  <li><a href="/logout">Log Out</a></li>
+</ul>

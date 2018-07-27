@@ -1,0 +1,12 @@
+<% @project = Project.find_by(project_name: session[:project_name]) %>
+
+<h1>Project Name: <%= session[:project_name] %><br></h1>
+<h3>Description: <%= @project.description %><br></h3>
+<h3>Content: <%= @project.content %></h3>
+<h3>contributors: <%= @project.contributors%>
+
+<ul>
+  <li><a href="/projects/:project_id/edit"> Edit Project<br>
+  <li><a href="/projects/projects">Your Projects</a></li>
+  <li><a href="/logout">Log Out</a></li>
+</ul>
