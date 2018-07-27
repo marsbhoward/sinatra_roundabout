@@ -13,6 +13,7 @@ class ProjectController < ApplicationController
 
   get 'projects/projects' do
    if Helpers.is_logged_in?(session)
+     @user = Helpers.current_user(session)
      erb :'projects/projects'
    else
      redirect '/login'
@@ -59,8 +60,9 @@ class ProjectController < ApplicationController
 
   post '/projects/:project_id/delete' do
     if Helpers.is_logged_in?(session)
-      @project = Project.find_by(project_id: params[:project_id])
+      @project = Helpers.current_project(session)
       @project.destroy
+      erb :'users/index'
     else
       redirect '/login'
     end
@@ -77,9 +79,9 @@ class ProjectController < ApplicationController
   end
 
   post '/projects/:project_id/edit' do
-    @project = Project.find_by(project_name: session[:project_name])
-    @project.update(description: params[:description] ,content: params[:content])
+    @project = Helpers.current_project(session)
+    @project.update(content: params[:content])
     @project.save
-    erb :'/users/index'
+    erb :'/projects/show'
   end
 end
