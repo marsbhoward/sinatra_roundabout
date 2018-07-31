@@ -10,11 +10,17 @@ class UserController < ApplicationController
 
   post '/signup' do
     if params['username'].empty? || params['password'].empty? || params['email'].empty?
-      redirect '/signup'
+
+
+      redirect '/signup', info: "Invalid email or password"
 
     elsif User.where(username: params['username']).exists? == true
-      #:database.execute(SELECT COUNT (usersname) FROM users WHERE usersname = params ['usersname']) == 1
+
+      redirect '/signup', info: "Invalid email or password"
+
+    elsif User.where(email: params['email']).exists? == true
       redirect '/signup'
+
     else
       @user = User.new(username: params['username'], email: params['email'], password: params['password'])
       @user.save

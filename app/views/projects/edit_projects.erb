@@ -1,9 +1,11 @@
-<form action="/projects" method="POST">
-  Project name: <%= session[:project_name] %><br>
-  project_id: <%= session[:project_id] %><br>
+<form action="/projects/:project_name/edit" method="POST">
+  Project name: <%= @project.project_name%><br>
+  Description: <%= @project.description%><br>
 
-  Description:<input type="text" name="description" id="description"><br>
   Content: <input type="text" name="content" id="content"><br>
-  <%user_id = session[:id]%>
-  <input type="submit" name="submit" id="submit">
+  <input type="submit" name="edit" id="edit" value="edit project"><br>
+</form>
+
+<form action="/projects/:project_name/delete" method="POST">
+  <input type="submit" name="delete" id="delete" value="delete project">
 </form>

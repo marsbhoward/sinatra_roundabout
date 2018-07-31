@@ -8,6 +8,7 @@ class Helpers
   end
 
   def self.current_project(session)
-    @project = Project.find_by(project_id: session[:project_id])
+    @project = Project.find_by(project_name: session[:project_name])
   end
+
 end
