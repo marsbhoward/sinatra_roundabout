@@ -1,5 +1,6 @@
 class UserController < ApplicationController
 
+
   get '/signup' do
     if Helpers.is_logged_in?(session)
       redirect '/users/index'
@@ -10,15 +11,15 @@ class UserController < ApplicationController
 
   post '/signup' do
     if params['username'].empty? || params['password'].empty? || params['email'].empty?
-
-
-      redirect '/signup', info: "Invalid email or password"
+      flash[:message] = "Please enter in all information."
+      redirect '/signup'
 
     elsif User.where(username: params['username']).exists? == true
-
-      redirect '/signup', info: "Invalid email or password"
+      flash[:message] = "This username is already in use."
+      redirect '/signup'
 
     elsif User.where(email: params['email']).exists? == true
+      flash[:message] = "There is already an account linked to this email."
       redirect '/signup'
 
     else
@@ -61,7 +62,4 @@ class UserController < ApplicationController
   get '/users/index' do
     erb :'users/index'
   end
-
-
-
 end

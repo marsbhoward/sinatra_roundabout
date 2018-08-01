@@ -26,6 +26,7 @@ class ProjectController < ApplicationController
         @Project = @user.projects.create(project_name: params[:project_name],description: params[:description],content: params[:content],contributors: session[:username])
         erb :'/projects/projects'
     else
+      flash[:message] = "Please enter a valid project name."
       redirect '/projects/new'
     end
   end

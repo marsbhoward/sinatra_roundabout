@@ -7,6 +7,7 @@ gem 'rake'
 gem 'require_all'
 gem 'thin'
 gem 'bcrypt'
+gem 'rack-flash3'
 
 
 group :development do
