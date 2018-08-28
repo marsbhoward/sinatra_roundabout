@@ -6,9 +6,4 @@ class Helpers
   def self.is_logged_in?(session)
     !User.find_by(id: session[:id]).nil?
   end
-
-  def self.current_project(session)
-    @project = Project.find_by(project_name: session[:project_name])
-  end
-
 end

@@ -4,7 +4,7 @@
 <%else%>
   <h2>These are your projects, <%= session[:username]%></h2>
   <% @user.projects.each do |p|%>
-    <a href="/projects/<%=p.project_name%>/show"> <%= p.project_name %> </a> <br>
+    <a href="/projects/<%=p.slug%>/show"> <%= p.project_name %> </a> <br>
   <%end%>
 <%end%>
 

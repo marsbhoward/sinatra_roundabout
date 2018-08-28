@@ -40,7 +40,7 @@ class ProjectController < ApplicationController
   end
 
   get '/projects/:project_project_name' do
-    if Helpers.is_logged_in?(session)
+    if Helpers.is_logged_in?(session) 
       @user = Helpers.current_user(session)
       @project = Helpers.current_project(session)
       erb :'projects/projects'
@@ -60,7 +60,7 @@ class ProjectController < ApplicationController
   end
 
   post '/projects/:project_name/delete' do
-    if Helpers.is_logged_in?(session)
+    if Helpers.is_logged_in?(session) && @user == @project.user_id
       @project = Helpers.current_project(session)
       @project.destroy
       erb :'users/index'
@@ -70,7 +70,7 @@ class ProjectController < ApplicationController
   end
 
   get '/projects/:project_name/edit' do
-    if Helpers.is_logged_in?(session)
+    if Helpers.is_logged_in?(session) && @user == @project.user_id
       @project = Helpers.current_project(session)
       #@project = Project.find_by(project_id: params[:project_id])
       erb :'projects/edit_projects'
