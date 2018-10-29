@@ -59,7 +59,7 @@ class ProjectController < ApplicationController
     end
   end
 
-  post '/projects/:project_name/delete' do
+  delete '/projects/:project_name/delete' do
     if Helpers.is_logged_in?(session) && @user == @project.user_id
       @project = Helpers.current_project(session)
       @project.destroy
@@ -79,7 +79,7 @@ class ProjectController < ApplicationController
     end
   end
 
-  post '/projects/:project_name/edit' do
+  patch '/projects/:project_name/edit' do
     @project = Helpers.current_project(session)
     @project.update(content: params[:content])
     @project.save
