@@ -11,9 +11,9 @@ gem 'bcrypt'
 
 group :development do
   gem 'shotgun'
-  gem 'pry'
+
   gem "tux"
-  gem 'sqlite3'
+  gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
 end
 
 group :test do

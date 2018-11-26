@@ -2,16 +2,7 @@ require './config/environment'
 
 class ProjectController < ApplicationController
 
-  get '/projects' do
-    if Helpers.is_logged_in?(session)
-      @projects = Project.all
-      erb :'projects/projects'
-    else
-      redirect '/login'
-    end
-  end
-
-  get 'projects/projects' do
+  get 'projects' do
    if Helpers.is_logged_in?(session)
      @user = Helpers.current_user(session)
      erb :'projects/projects'
@@ -34,16 +25,6 @@ class ProjectController < ApplicationController
   get '/projects/new' do
     if Helpers.is_logged_in?(session)
       erb :'projects/new'
-    else
-      redirect '/login'
-    end
-  end
-
-  get '/projects/:project_project_name' do
-    if Helpers.is_logged_in?(session) 
-      @user = Helpers.current_user(session)
-      @project = Helpers.current_project(session)
-      erb :'projects/projects'
     else
       redirect '/login'
     end
